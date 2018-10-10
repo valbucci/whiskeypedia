@@ -1,0 +1,27 @@
+<h2>Admin Control Panel</h2>
+<h4>User List</h4>
+<form action="/user/edit" method="post" id="userList">
+	<input type="hidden" name="_method" value="put">
+	<input type="submit" value="Apply">
+	<table>
+		<thead>
+			<tr>
+				<th>Username</th><th>Date Joined</th><th>Edit?</th><th></th>
+			</tr>
+		</thead>
+		<tbody>
+			<% @list2.each do |liste| %>
+				<tr>
+					<td><%= liste.username %></td>
+					<td><%= liste.date_joined %></td>
+					<td>
+						<input type="checkbox" name="edit[]" value="<%= liste.id %>" <%= "checked" if liste.edit %>>
+						<input type="hidden" name="userEdit[]" value="<%= liste.id %>">
+					</td>
+					<td><a href="/user/delete/<%= liste.id %>">&1282;</a></td>
+				</tr>
+			<% end %>
+		</tbody>
+	</table>
+	<input type="submit" value="Apply">
+</form>

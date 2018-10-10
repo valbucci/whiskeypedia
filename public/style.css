@@ -1,0 +1,35 @@
+body {
+	font-family: Arial;
+	background-color: whitesmoke;
+	margin-left: auto;
+	margin-right: auto;
+	width: 1200px;
+}
+a {
+	text-decoration: none;
+}
+.content {
+	display: inline-block;
+	background-color: #EEEEEE;
+	height: 340px;
+	width: 500px;
+	float: left;
+}
+div.main_container{
+	background-color: grey;
+}
+div.page_title {
+	text-align: center;
+}
+div.navbar {
+	width: 100%;
+	position: relative;
+	float: left;
+}
+div.view_content {
+	min-height: 800px;
+}
+header {
+	height: 100px;
+	padding-bottom: 50px;
+}
