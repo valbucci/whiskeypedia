@@ -25,9 +25,8 @@ end
 class History
 	include DataMapper::Resource
 	property :id, Serial
-	property :codeLog, Integer
+	property :codeLog, Integer, :required => true
 	property :text, Text, :required => true
-	property :action, Text, :required => true
 end
 
 DataMapper.finalize.auto_upgrade!
@@ -108,6 +107,17 @@ put '/edit' do
 	file.puts @info
 	file.close
 
+	log = Log.new
+	log.codeUser = $userData[:id]
+	log.date = Time.now
+	log.event = "EDIT"
+	log.save
+
+	his = History.new
+	his.codeLog = log.id
+	his.text = @info
+	his.save
+
 	redirect '/'
 end
 
@@ -118,13 +128,12 @@ end
 post '/login' do
 	$credentials = [params[:username], params[:password]]
 	@uname = $credentials[0]
-	@Users = User.first(:username => $credentials[0])
+	@Users = User.first(:username => @uname)
 	if @Users
 		if @Users.password == $credentials[1]
 			$userData = {:id => @Users.id, :username => @Users.username, :edit => @Users.edit}
 			log = Log.new
 			log.codeUser = $userData[:id]
-			log.username = $userData[:username]
 			log.date = Time.now
 			log.event = "LOGGED_IN"
 			log.save
@@ -175,7 +184,6 @@ get '/logout' do
 	if $userData != nil
 		log = Log.new
 		log.codeUser = $userData[:id]
-		log.username = $userData[:username]
 		log.date = Time.now
 		log.event = "LOGGED_OUT"
 		log.save
