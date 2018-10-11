@@ -12,43 +12,48 @@
 		<div class="main_container">
 			<header>
 				<div class="page_title">
-					<h1>My Wiki App</h1>
-				</div>
-				<div class="navbar">
-					<ul>
-						<li><a href="/">Home</a></li>
-						<li><a href="/create">Create</a></li>
-						<li><a href="/about">About</a></li>
-						<li><a href="/edit">Edit</a></li>
-						<% if $credentials %>
-							<% if $credentials[0] != '' %>
-								</ul>
-								<div class="logged-in-as">
-									<span>Logged in as </span>
-									<a id="username-sidebar" href="/user/<%= $credentials[0] %>">
-										<%= $credentials[0] %>
-									</a>
-								</div>
-								<ul>
-								<% if $credentials[0] == 'Admin' %>
-									<li><a href="/admincontrols">Admin Controls</a></li>
-								<% end %>
-									<li><a href="/logout">Logout</a></li>
-							<% else %>
-								<li><a href="/login">Login</a></li>
-							<% end %>
-						<% else %>
-								<li><a href="/login">Login</a></li>
-						<% end %>
-					</ul>
+					<h1>Whiskeypedia</h1>
 				</div>
 			</header>
-			<div>
-				<%= yield %>
+			<div class="middle">
+				<section class="sidebar">
+					<ul>
+						<a href="/"><li>Home</li></a>
+						<a href="/create"><li>Create</li></a>
+						<a href="/about"><li>About</li></a>
+						<% if $credentials %>
+							<% if $credentials[0] != '' %>
+								<% if $credentials[0] == 'Admin' %>
+									<a href="/admincontrols"><li>Admin Controls</li></a>
+								<% end %>
+								<% if User.first(:username => $credentials[0]).edit %>
+									<a href="/edit"><li>Edit</li></a>
+								<% end %>
+								<hr>
+								<div class="logged-in-as">
+									<span>My Profile</span>
+								</div>
+								<a id="username-sidebar" href="/user/<%= $credentials[0] %>">
+									<li><%= $credentials[0] %></li>
+								</a>
+								<a href="/logout"><li>Logout</li></a>
+							<% else %>
+								<a href="/login"><li>Login</li></a>
+							<% end %>
+						<% else %>
+								<a href="/login"><li>Login</li></a>
+						<% end %>
+					</ul>
+				</section>
+				<section class="page-container">
+					<div class="page">
+						<%= yield %>
+					</div>
+					<footer>
+						<span>Created by <%= $myinfo %></span>
+					</footer>
+				</section>
 			</div>
-			<footer>
-				<p>Created by <%= $myinfo %></p>
-			</footer>
 		</div>
 	</body>
 </html>

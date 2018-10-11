@@ -1,35 +1,115 @@
 body {
+	margin: 0;
 	font-family: Arial;
 	background-color: whitesmoke;
-	margin-left: auto;
-	margin-right: auto;
-	width: 1200px;
+	height: 100vh;
+	width: 100vw;
 }
-a {
-	text-decoration: none;
+
+hr {
+	border-color: #000090;
 }
-.content {
-	display: inline-block;
-	background-color: #EEEEEE;
-	height: 340px;
-	width: 500px;
-	float: left;
-}
-div.main_container{
-	background-color: grey;
-}
-div.page_title {
-	text-align: center;
-}
-div.navbar {
+
+.main_container {
+	position: relative;
+	display: block;
 	width: 100%;
+	height: 100vh;
+}
+
+header {
+	height: 15vh;
+	text-align: center;
+	background-color: antiquewhite;
+}
+
+header h1 {
+	margin: 0;
+	line-height: 15vh;
+}
+
+.middle {
+	height: 85vh;
+	width: 100%;
+}
+
+header, .middle {
+	display: block;
+	position: relative;
+}
+
+.sidebar, .page-container {
+	display: block;
+	height: 100%;
+}
+
+.sidebar {
+	float: left;
+	width: 20%;
+	height: 100%;
+
+	background-color: #000040;
+	color: aliceblue;
+}
+
+.sidebar a {
+	text-decoration: none;
+	color: lightgoldenrodyellow;
+}
+
+.sidebar ul {
+	list-style-type: none;
+    padding: 0;
+    overflow: hidden;
+}
+
+
+.logged-in-as + li {
+	padding: 0 !important;
+}
+
+.sidebar ul li {
+	width: 100%;
+	transition: .5s;
+}
+
+.sidebar ul li:hover {
+	background-color: #000060;
+}
+
+.sidebar ul li {
+	padding: 15px;
+}
+
+.logged-in-as {
+	padding: 15px 0;
+	margin-left: 15px;
+}
+
+.page-container {
 	position: relative;
 	float: left;
+	width: 80%;
+	padding: 0;
+
+	overflow-y: scroll;
 }
-div.view_content {
-	min-height: 800px;
+
+.page {
+	padding: 0 25px;
 }
-header {
-	height: 100px;
-	padding-bottom: 50px;
+
+footer {
+	position: absolute;
+	width: calc(100% - 50px);
+	height: calc(5vh - 20px);
+	bottom: 0;
+	text-align: right;
+	color: aliceblue;
+	background-color: #000040;
+	padding: 10px 25px;
+}
+
+.delete-user {
+	text-decoration: none;
 }

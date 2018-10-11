@@ -23,7 +23,7 @@ end
 
 DataMapper.finalize.auto_upgrade!
 
-$myinfo = "Valerio Bucci"
+$myinfo = "Andrei & Valerio"
 @info = ""
 
 helpers do
@@ -58,19 +58,14 @@ def readFile(filename)
 		info = info + line
 	end
 	file.close
-	$myinfo = info
+	$article = info
 end
 
 get '/' do
-	info = "Hello there!"
-	len = info.length
-	len1 = len
 	readFile("wiki.txt")
-	@info = info + " " + $myinfo
-	len = @info.length
-	len2 = len - 1
-	len3 = len2 - len1
-	@words = len3.to_s
+	len = $article.length
+	@info = $article
+	@words = len.to_s
 	erb :home
 end
 
@@ -79,7 +74,6 @@ get '/about' do
 end
 
 get '/create' do
-	#$myinfo = $myinfo
 	erb :create
 end
 
@@ -126,7 +120,7 @@ post '/login' do
 			log.save
 			redirect '/'
 		else
-			$credentials[1] = ['', '']
+			$credentials = ['', '']
 			erb :login, :locals => {:wrongcredentials => true, :user => @uname}
 		end
 	else
@@ -136,8 +130,8 @@ post '/login' do
 end
 
 get '/user/:uzer' do
-	@Uzer = User.first(:username => params[:uzer])
-	if $userData != nil and @Uzer.id == $userData[:id]
+	@Userz = User.first(:username => params[:uzer])
+	if $userData != nil and @Userz.id == $userData[:id]
 		erb :profile
 	else
 		redirect '/notlogged'
@@ -210,6 +204,10 @@ get '/user/delete/:uzer' do
 		@list2 = User.all :order => :id.desc
 		erb :admincontrols
 	end
+end
+
+get '/denied' do
+	erb :denied
 end
 
 not_found do
