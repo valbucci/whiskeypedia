@@ -1,3 +1,5 @@
+# Project by Andrei Rotariu and Valerio Bucci
+
 require "sinatra"
 require "data_mapper"
 
@@ -16,9 +18,15 @@ class Log
 	include DataMapper::Resource
 	property :id, Serial
 	property :codeUser, Integer
-	property :username, Text, :required => true
 	property :date, DateTime
-	property :loggedIn, Boolean, :required => true, :default => true
+	property :event, Text, :required => true
+end
+
+class History
+	include DataMapper::Resource
+	property :codeLog, Integer, :unique => true
+	property :text, Text, :required => true
+	property :action, Text, :required => true
 end
 
 DataMapper.finalize.auto_upgrade!
