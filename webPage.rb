@@ -24,7 +24,8 @@ end
 
 class History
 	include DataMapper::Resource
-	property :codeLog, Integer, :unique => true
+	property :id, Serial
+	property :codeLog, Integer
 	property :text, Text, :required => true
 	property :action, Text, :required => true
 end
@@ -106,6 +107,7 @@ put '/edit' do
 	file = File.open("wiki.txt", "w")
 	file.puts @info
 	file.close
+
 	redirect '/'
 end
 
@@ -121,10 +123,10 @@ post '/login' do
 		if @Users.password == $credentials[1]
 			$userData = {:id => @Users.id, :username => @Users.username, :edit => @Users.edit}
 			log = Log.new
-			log.username = $userData[:username]
 			log.codeUser = $userData[:id]
+			log.username = $userData[:username]
 			log.date = Time.now
-			log.loggedIn = true
+			log.event = "LOGGED_IN"
 			log.save
 			redirect '/'
 		else
@@ -172,10 +174,10 @@ end
 get '/logout' do
 	if $userData != nil
 		log = Log.new
-		log.username = $userData[:username]
 		log.codeUser = $userData[:id]
+		log.username = $userData[:username]
 		log.date = Time.now
-		log.loggedIn = true
+		log.event = "LOGGED_OUT"
 		log.save
 	end
 	$credentials = nil
