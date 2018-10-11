@@ -69,11 +69,30 @@ def readFile(filename)
 	$article = info
 end
 
+def count_characters(article)
+	char = 0
+	html = false
+	article.split('').each do |character|
+		if character == "<"
+			html = true
+		elsif character == ">"
+			html = false
+		else
+			if !html
+				char += 1
+			end
+		end
+	end
+	$words = article.split(' ').length
+	$char = char
+end
+
 get '/' do
 	readFile("wiki.txt")
-	len = $article.length
+	len = count_characters($article)
 	@info = $article
-	@words = len.to_s
+	@characters = $char.to_s
+	@words = $words.to_s
 	erb :home
 end
 
@@ -119,6 +138,27 @@ put '/edit' do
 	his.save
 
 	redirect '/'
+end
+
+get '/reset' do
+	protected!
+	info = ""
+	file1 = File.open("reset.txt")
+	file1.each do |line|
+		info = info + line
+	end
+	file1.close
+	@info = info
+
+	file2 = File.open("wiki.txt", "w")
+	file2.truncate(0)
+	#Clears wiki.txt file. --> file.truncate(0) changes filesize to 0.
+	file2.puts @info
+	file2.close
+
+	redirect '/'
+
+
 end
 
 get '/login' do

@@ -4,4 +4,11 @@
 	<textarea rows="20" cols="90" name="message"><%= @info %></textarea>
 	<input type="submit" value="Update">
 </form>
-<a href="../reset">Reset</a>
+
+<% if $credentials %>
+	<% if $credentials[0] != "" %>
+		<% if $credentials[0] == 'Admin' %>
+			<a href="../reset">Reset</a>
+		<% end %>
+	<% end %>
+<% end %>
