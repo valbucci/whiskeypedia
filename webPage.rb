@@ -87,6 +87,22 @@ def count_characters(article)
 	$char = char
 end
 
+def replace(file_1, file_2)
+	#Replaces file_2 with file_1.
+	info = ""
+	original = File.open(file_1)
+	original.each do |line|
+		info = info + line
+	end
+	original.close
+	@info = info
+
+	replace = File.open(file_2, "w")
+	replace.truncate(0)
+	replace.puts @info
+	replace.close
+end
+
 get '/' do
 	readFile("wiki.txt")
 	len = count_characters($article)
@@ -142,23 +158,17 @@ end
 
 get '/reset' do
 	protected!
-	info = ""
-	file1 = File.open("reset.txt")
-	file1.each do |line|
-		info = info + line
-	end
-	file1.close
-	@info = info
-
-	file2 = File.open("wiki.txt", "w")
-	file2.truncate(0)
-	#Clears wiki.txt file. --> file.truncate(0) changes filesize to 0.
-	file2.puts @info
-	file2.close
+	replace("reset.txt", "wiki.txt")
 
 	redirect '/'
+end
 
+get '/makedefault' do
+	protected!
+	replace("wiki.txt", "reset.txt")
+	#Any changes to wiki.txt must be updated before make default.
 
+	redirect '/'
 end
 
 get '/login' do
