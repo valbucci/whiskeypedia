@@ -69,7 +69,6 @@ def readFile(filename)
 	$article = info
 end
 
-<<<<<<< HEAD
 def joinLogUser(logs)
 	# start by getting user table
 	users = User.all
@@ -93,7 +92,7 @@ def joinLogUser(logs)
 	end
 
 	return join
-=======
+end
 def count_characters(article)
 	char = 0
 	html = false
@@ -126,7 +125,6 @@ def replace(file_1, file_2)
 	replace.truncate(0)
 	replace.puts @info
 	replace.close
->>>>>>> origin/master
 end
 
 get '/' do
