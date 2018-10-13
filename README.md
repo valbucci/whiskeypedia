@@ -3,9 +3,9 @@
 
 ## Program
 
-- [ ] Visualize log.
+- [x] Visualize log.
 - [x] Reset Button -> Original State.
-- [ ] Override/Remove Changes.
+- [x] Override/Remove Changes.
 
 ## Design
 - [ ] Logo (Optional)
