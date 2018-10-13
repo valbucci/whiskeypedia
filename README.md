@@ -4,7 +4,7 @@
 ## Program
 
 - [ ] Visualize log.
-- [ ] Reset Button -> Original State.
+- [x] Reset Button -> Original State.
 - [ ] Override/Remove Changes.
 
 ## Design

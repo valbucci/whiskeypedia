@@ -69,6 +69,7 @@ def readFile(filename)
 	$article = info
 end
 
+<<<<<<< HEAD
 def joinLogUser(logs)
 	# start by getting user table
 	users = User.all
@@ -92,13 +93,48 @@ def joinLogUser(logs)
 	end
 
 	return join
+=======
+def count_characters(article)
+	char = 0
+	html = false
+	article.split('').each do |character|
+		if character == "<"
+			html = true
+		elsif character == ">"
+			html = false
+		else
+			if !html
+				char += 1
+			end
+		end
+	end
+	$words = article.split(' ').length
+	$char = char
+end
+
+def replace(file_1, file_2)
+	#Replaces file_2 with file_1.
+	info = ""
+	original = File.open(file_1)
+	original.each do |line|
+		info = info + line
+	end
+	original.close
+	@info = info
+
+	replace = File.open(file_2, "w")
+	replace.truncate(0)
+	replace.puts @info
+	replace.close
+>>>>>>> origin/master
 end
 
 get '/' do
 	readFile("wiki.txt")
-	len = $article.length
+	len = count_characters($article)
 	@info = $article
-	@words = len.to_s
+	@characters = $char.to_s
+	@words = $words.to_s
 	erb :home
 end
 
@@ -142,6 +178,21 @@ put '/edit' do
 	his.codeLog = log.id
 	his.text = @info
 	his.save
+
+	redirect '/'
+end
+
+get '/reset' do
+	protected!
+	replace("reset.txt", "wiki.txt")
+
+	redirect '/'
+end
+
+get '/makedefault' do
+	protected!
+	replace("wiki.txt", "reset.txt")
+	#Any changes to wiki.txt must be updated before make default.
 
 	redirect '/'
 end
