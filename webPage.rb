@@ -69,6 +69,31 @@ def readFile(filename)
 	$article = info
 end
 
+def joinLogUser(logs)
+	# start by getting user table
+	users = User.all
+	# instance of empty array that will contain the joined results
+	join = [];
+	# using a temporary variable to reduce the number of calls to the database
+	prevId = nil
+	# I will be using another variable to store names so if there are repeating logs about a single user
+	# the database will be only called once
+	uname = nil
+	# join the two tables
+	logs.each do |log|
+		userId = log.codeUser
+		# if the user is the same as before there's no need to call the database
+		if userId != prevId
+			uname = users.first(:id => userId).username
+			prevId = userId
+		end
+		# add everything to the array
+		join.push(:id => userId, :username => uname, :date => log.date, :event => log.event)
+	end
+
+	return join
+end
+
 get '/' do
 	readFile("wiki.txt")
 	len = $article.length
@@ -150,10 +175,27 @@ end
 
 get '/user/:uzer' do
 	@Userz = User.first(:username => params[:uzer])
-	if $userData != nil and @Userz.id == $userData[:id]
+	if @Userz != nil
+		# get logs from a user
+		@Logs = Log.all(:codeUser => @Userz.id, :event => "EDIT")
+		# retrieve edit history from all user editings
+		@his = []
+		@Logs.each do |log|
+			# add history record linked to the log
+			history = History.first(:codeLog => log.id).text
+			# store the article before the user edited it
+			prevLog = Log.first(:date => Log.max(:date, :date.lt => log.date, :event => "EDIT"))
+			if prevLog != nil
+				prevtext = History.first(:codeLog => prevLog.id).text
+			else
+				prevtext = ""
+			end
+			# add all informations to the list
+			@his.push(:id => history, :log => log, :prevLog => prevLog, :date => log.date, :text => history, :prevtext => prevtext)
+		end
 		erb :profile
 	else
-		redirect '/notlogged'
+		redirect '/usernotfound'
 	end
 end
 
@@ -211,10 +253,10 @@ put '/user/edit' do
 	redirect '/admincontrols'
 end
 
-get '/user/delete/:uzer' do
+get '/user/delete/:iduzer' do
 	protected!
 
-	n = User.first(:id => params[:uzer])
+	n = User.first(:id => params[:iduzer])
 	if n.username == "Admin"
 		erb :denied
 	else
@@ -222,6 +264,25 @@ get '/user/delete/:uzer' do
 		@list2 = User.all :order => :id.desc
 		erb :admincontrols
 	end
+end
+
+get '/logs' do
+	protected!
+	logs = Log.all :order => :id.desc
+	@joined = joinLogUser(logs)
+	erb :logs
+end
+
+get '/logs/:uzer' do
+	protected!
+	user = User.first(:username => params[:uzer])
+	if user != nil
+		logs = Log.all(:codeUser => user.id, :order => :id.desc)
+		@joined = joinLogUser(logs)
+	else
+		redirect '/logs'
+	end
+	erb :logs
 end
 
 get '/denied' do
