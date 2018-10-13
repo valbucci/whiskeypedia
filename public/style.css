@@ -17,7 +17,7 @@ hr {
 	height: 100vh;
 }
 
-header {
+.page_header {
 	height: 15vh;
 	text-align: center;
 	background-color: antiquewhite;
@@ -112,4 +112,11 @@ footer {
 
 .delete-user {
 	text-decoration: none;
+}
+
+.disabled-link {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
 }

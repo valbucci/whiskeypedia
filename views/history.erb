@@ -1,0 +1,21 @@
+<h2>History</h2>
+<ul>
+	<%
+		i = 0
+		@his.each do |his|
+	%>
+		<li class="historyLog">
+			<a href="/user/<%= his[:user] %>" class="historyUser"><%= his[:user] %></a>
+			<a href="/history/<%= his[:id] %>" class="editHistLink">
+				<%= his[:date] %>
+				<% if i == @his.length-1 %>
+					- Added Article
+				<%
+					first = false
+					end
+					i += 1
+				%>
+			</a>
+		</li>
+	<% end %>
+</ul>

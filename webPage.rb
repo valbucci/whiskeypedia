@@ -25,7 +25,7 @@ end
 class History
 	include DataMapper::Resource
 	property :id, Serial
-	property :codeLog, Integer, :required => true
+	property :codeLog, Integer, :required => true, :unique => true
 	property :text, Text, :required => true
 end
 
@@ -43,11 +43,34 @@ helpers do
 		redirect '/denied'
 	end
 
+	def superprotected!
+		if admin?
+			return
+		end
+
+		redirect '/denied'
+	end
+
 	def authorised?
 		if $credentials != nil
 			@Userz = User.first(:username => $credentials[0])
 			if @Userz
 				if @Userz.edit == true or @Userz.username == "Admin"
+					return true
+				else
+					return false
+				end
+			else
+				return false
+			end
+		end
+	end
+
+	def admin?
+		if $credentials != nil
+			@Userz = User.first(:username => $credentials[0])
+			if @Userz
+				if @Userz.username == "Admin"
 					return true
 				else
 					return false
@@ -93,6 +116,7 @@ def joinLogUser(logs)
 
 	return join
 end
+
 def count_characters(article)
 	char = 0
 	html = false
@@ -125,6 +149,40 @@ def replace(file_1, file_2)
 	replace.truncate(0)
 	replace.puts @info
 	replace.close
+end
+
+# get the common parts of two strings
+# e.g. diffHighlight("Hello", "Helno") --> Hel<u class="highlight">n</u>o
+def diffHighlight(bef, aft)
+	if bef == nil
+		bef = ""
+	end
+	i = 0
+	# string to be prepared
+	str = ""
+	# highlight opened helper
+	highlight = false
+	while i < aft.length
+		if i < bef.length and bef[i] == aft[i]
+			if highlight
+				highlight = false
+				str += '</u>'
+			end
+			str += bef[i]
+		else
+			if highlight
+				str += aft[i]
+			else
+				highlight = true
+				str += '<u class="highlight">'+aft[i]
+			end
+		end
+		i += 1
+	end
+	if highlight
+		str += '</u>'
+	end
+	return str
 end
 
 get '/' do
@@ -231,16 +289,10 @@ get '/user/:uzer' do
 		@his = []
 		@Logs.each do |log|
 			# add history record linked to the log
-			history = History.first(:codeLog => log.id).text
-			# store the article before the user edited it
-			prevLog = Log.first(:date => Log.max(:date, :date.lt => log.date, :event => "EDIT"))
-			if prevLog != nil
-				prevtext = History.first(:codeLog => prevLog.id).text
-			else
-				prevtext = ""
-			end
+			history = History.first(:codeLog => log.id)
+
 			# add all informations to the list
-			@his.push(:id => history, :log => log, :prevLog => prevLog, :date => log.date, :text => history, :prevtext => prevtext)
+			@his.push(:id => history.id, :date => log.date)
 		end
 		erb :profile
 	else
@@ -332,6 +384,56 @@ get '/logs/:uzer' do
 		redirect '/logs'
 	end
 	erb :logs
+end
+
+get '/history' do
+	history = History.all(:order => :id.desc)
+	@his = []
+	history.each do |e|
+		log = Log.first(:id => e.codeLog)
+		user = User.first(:id => log.codeUser)
+		@his.push(:id => e.id, :date => log.date, :user => user.username)
+	end
+	erb :history
+end
+
+get '/history/:id' do
+	text = History.first(:id => params[:id])
+	if text != nil
+		log = Log.first(:id => text.codeLog)
+		date = log.date
+		user = User.first(:id => log.codeUser)
+		# store the article before the user edited it
+		prev = History.first(:id => History.max(:id, :id.lt => text.id))
+		previd = History.max(:id, :id.lt => text.id)
+		nxt = History.min(:id, :id.gt => text.id)
+		if prev != nil
+			prevtext = prev.text
+		else
+			prevtext = ""
+		end
+		diff = diffHighlight(prevtext, text.text)
+		@his = {:username => user.username, :tid => text.id, :date => date, :diff => diff, :previous => previd, :next => nxt}
+		erb :editLog
+	else
+		redirect '/history/'+History.max(:id).to_s
+	end
+end
+
+get '/restore/:id' do
+	superprotected!
+	toRes = History.first(:id => params[:id])
+	if toRes != nil
+		text = toRes.text
+		toTrash = History.all(:id.gt => toRes.id)
+		toTrash.destroy
+
+		replace = File.open("wiki.txt", "w")
+		replace.truncate(0)
+		replace.puts text
+		replace.close
+	end
+	redirect '/'
 end
 
 get '/denied' do

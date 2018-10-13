@@ -1,46 +1,18 @@
-<h2>Your Profile</h2>
 <% if @Userz %>
-	<article>
-		<h3>Account - <%= @Userz.username %></h3>
-	</article>
+	<header>
+		<h2>Your Profile</h2>
+		<h3><%= @Userz.username %></h3>
+	</header>
 <% end %>
 
-<%
-# get the common parts of two strings
-# e.g. diffHighlight("Hello", "Helno") --> Hel<u class="highlight">n</u>o
-def diffHighlight(bef, aft)
-	if bef == nil
-		bef = ""
-	end
-	i = 0
-	# string to be prepared
-	str = ""
-	# highlight opened helper
-	highlight = false
-	while i < aft.length
-		if i < bef.length and bef[i] == aft[i]
-			if highlight
-				highlight = false
-				str += '</u>'
-			end
-			str += bef[i]
-		else
-			if highlight
-				str += aft[i]
-			else
-				highlight = true
-				str += '<u class="highlight">'+aft[i]
-			end
-		end
-		i += 1
-	end
-	if highlight
-		str += '</u>'
-	end
-	return str
-end
-%>
-
-<% @his.each do |his| %>
-	<%= diffHighlight(his[:prevtext], his[:text]) %>
-<% end %>
+<section>
+	<%
+		@his.each do |his|
+	%>
+		<div class="historyLog">
+			<a href="/history/<%= his[:id] %>" class="editHistLink">
+				<%= his[:date] %>
+			</a>
+		</div>
+	<% end %>
+</section>

@@ -12,7 +12,7 @@
 		<tbody>
 			<% @list2.each do |liste| %>
 				<tr>
-					<td><%= liste.username %></td>
+					<td><a href="/user/<%= liste.username %>"><%= liste.username %></a></td>
 					<td><%= liste.date_joined %></td>
 					<td>
 						<input type="checkbox" name="edit[]" value="<%= liste.id %>" <%= "checked" if liste.edit %>>
