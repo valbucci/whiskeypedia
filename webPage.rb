@@ -290,9 +290,11 @@ get '/user/:uzer' do
 		@Logs.each do |log|
 			# add history record linked to the log
 			history = History.first(:codeLog => log.id)
-
-			# add all informations to the list
-			@his.push(:id => history.id, :date => log.date)
+			# when an history record is removed we still want to keep the log so sometimes the result will be "nil"
+			if history != nil
+				# add all informations to the list
+				@his.push(:id => history.id, :date => log.date)
+			end
 		end
 		erb :profile
 	else
@@ -368,14 +370,14 @@ get '/user/delete/:iduzer' do
 end
 
 get '/logs' do
-	protected!
+	superprotected!
 	logs = Log.all :order => :id.desc
 	@joined = joinLogUser(logs)
 	erb :logs
 end
 
 get '/logs/:uzer' do
-	protected!
+	superprotected!
 	user = User.first(:username => params[:uzer])
 	if user != nil
 		logs = Log.all(:codeUser => user.id, :order => :id.desc)
