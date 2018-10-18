@@ -12,8 +12,7 @@
 
 
 ## Documentation
-
-### Manual - Andrei
+-[x] manual.pdf - Andrei
 	- [x] Description of wiki (Vision)
 	- [x] System Requirements:
 		- Software
