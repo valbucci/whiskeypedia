@@ -18,9 +18,20 @@ hr {
 }
 
 .page_header {
-	height: 15vh;
+	height: 18vh;
 	text-align: center;
-	background-color: antiquewhite;
+	background-color: #000090;
+}
+
+.logo-row {
+	width: 250px
+	margin: 0 auto;
+}
+
+.logo {
+	width: 250px;
+	height: 150px;
+	text-align: center;
 }
 
 header h1 {
