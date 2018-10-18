@@ -7,7 +7,7 @@
 		<li class="historyLog">
 			<a href="/user/<%= his[:user] %>" class="historyUser"><%= his[:user] %></a>
 			<a href="/history/<%= his[:id] %>" class="editHistLink">
-				<%= his[:date] %>
+				<%= his[:date].strftime(fmt='%F %T') %>
 				<% if i == @his.length-1 %>
 					- Added Article
 				<%

@@ -14,7 +14,7 @@
 						<%= log[:username] %>
 					</a>
 				</td>
-				<td><%= log[:date] %></td>
+				<td><%= log[:date].strftime(fmt='%F %T') %></td>
 				<td><%= log[:event] %></td>
 			</tr>
 		<% end %>
