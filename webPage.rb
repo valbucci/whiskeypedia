@@ -1,4 +1,5 @@
 # Project by Andrei Rotariu and Valerio Bucci
+# Template modified from WAD course practicals.
 
 require "sinatra"
 require "data_mapper"
@@ -118,6 +119,7 @@ def joinLogUser(logs)
 end
 
 #Goes through each character (counting them) and stop counting during html tags.
+
 def count_characters(article)
 	char = 0
 	html = false
