@@ -89,7 +89,7 @@ def readFile(filename)
 		info = info + line
 	end
 	file.close
-	$article = info
+	return info
 end
 
 def joinLogUser(logs)
@@ -135,8 +135,12 @@ def count_characters(article)
 	$char = char
 end
 
-def replace(file_1, file_2)
-	#Replaces file_2 with file_1.
+=begin
+def replace(file = "reset.txt")
+	This part was for switching between 2 text files rather than the database
+	[ UPGRADED to DATABASE ]
+
+	# Replaces file_2 with file_1.
 	info = ""
 	original = File.open(file_1)
 	original.each do |line|
@@ -150,6 +154,7 @@ def replace(file_1, file_2)
 	replace.puts @info
 	replace.close
 end
+=end
 
 # get the common parts of two strings
 # e.g. diffHighlight("Hello", "Helno") --> Hel<u class="highlight">n</u>o
@@ -162,6 +167,7 @@ def diffHighlight(bef, aft)
 	str = ""
 	# highlight opened helper
 	highlight = false
+	# check from left to right for differences
 	while i < aft.length
 		if i < bef.length and bef[i] == aft[i]
 			if highlight
@@ -179,16 +185,36 @@ def diffHighlight(bef, aft)
 		end
 		i += 1
 	end
-	if highlight
-		str += '</u>'
+=begin
+	# check again from right to left
+	equals = false
+	html = false
+	while i > 0
+		# check if I'm in a html tag
+		if str[i] == ">"
+			html = true
+		elsif str[i] == "<"
+			html = false
+
+		# I don't want to compare html code to the original string
+		if !html
+			if i < bef.length
+				if (bef[i] == str[i]) == equals
+					str.insert(i-1, )
+				end
+				i -= 1
+			end
+		end
 	end
+=end
 	return str
 end
 
 get '/' do
-	readFile("wiki.txt")
-	len = count_characters($article)
-	@info = $article
+	# readFile("wiki.txt")
+	last = History.first(:order => id.desc)
+	len = count_characters(last)
+	@info = last
 	@characters = $char.to_s
 	@words = $words.to_s
 	erb :home
@@ -205,52 +231,64 @@ end
 get '/edit' do
 	protected!
 
-	info = ""
-	file = File.open("wiki.txt")
-	file.each do |line|
-		info = info + line
-	end
-	file.close
-	@info = info
+	last = History.first(:order => id.desc)
+	@info = last
 	erb :edit
 end
 
 put '/edit' do
 	protected!
 
-	info = "#{params[:message]}"
-	@info = info
-	file = File.open("wiki.txt", "w")
-	file.puts @info
-	file.close
+	@info = "#{params[:message]}"
+	last = History.first(:order => id.desc)
+	if @info != last
+		log = Log.new
+		log.codeUser = $userData[:id]
+		log.date = Time.now
+		log.event = "EDIT"
+		log.save
 
-	log = Log.new
-	log.codeUser = $userData[:id]
-	log.date = Time.now
-	log.event = "EDIT"
-	log.save
-
-	his = History.new
-	his.codeLog = log.id
-	his.text = @info
-	his.save
-
-	redirect '/'
+		his = History.new
+		his.codeLog = log.id
+		his.text = @info
+		his.save
+	end
 end
 
 get '/reset' do
 	protected!
-	replace("reset.txt", "wiki.txt")
+	# reset to the default text
+	last = History.first(:order => id.desc)
 
-	redirect '/'
+	replace = readFile("wiki.txt")
+
+	if replace != last
+		log = Log.new
+		log.codeUser = $userData[:id]
+		log.date = Time.now
+		log.event = "EDIT"
+		log.save
+
+		his = History.new
+		his.codeLog = log.id
+		his.text = replace
+		his.save
+	end
+	redirect '/edit'
 end
 
 get '/makedefault' do
 	protected!
-	replace("wiki.txt", "reset.txt")
-	#Any changes to wiki.txt must be updated before make default.
+	# Makes replace actual default text with the last change
+	## Any changes must be updated before make default.
+	last = History.first(:order => id.desc)
+	@info = last
 
-	redirect '/'
+	replace = File.open(file, "w")
+	replace.truncate(0)
+	replace.puts @info
+	replace.close
+	redirect '/edit'
 end
 
 get '/login' do
