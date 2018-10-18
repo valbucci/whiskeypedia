@@ -3,22 +3,20 @@
 
 ## Program
 
-- [x] Visualize log.
-- [x] Reset Button -> Original State.
-- [x] Override/Remove Changes.
+- [x] Visualize log. - Valerio
+- [x] Reset Button -> Original State. - Andrei
+- [x] Override/Remove Changes. - Valerio
 
 ## Design
 - [ ] Logo (Optional)
 
-
 ## Documentation
-
-- [ ] manual.pdf
+- [x] manual.pdf - Andrei
 	- [x] Description of wiki (Vision)
 	- [x] System Requirements:
 		- Software
 		- Usernames and Passwords
 		- Additional Gems and Files.
-	- [x] Description of Features and Functionalities.
+	- [x] Description of Features and Functionalities. - Andrei & Valerio
 	- [x] Step-by-step instructions on how to use features.
-	- [ ] Screenshots illustrating features and functionalities.
+	- [x] Screenshots illustrating features and functionalities.
