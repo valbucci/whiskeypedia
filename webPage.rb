@@ -201,10 +201,6 @@ get '/about' do
 	erb :about
 end
 
-get '/create' do
-	erb :create
-end
-
 get '/edit' do
 	protected!
 
@@ -237,8 +233,6 @@ put '/edit' do
 	his.codeLog = log.id
 	his.text = @info
 	his.save
-
-	redirect '/'
 end
 
 get '/reset' do
