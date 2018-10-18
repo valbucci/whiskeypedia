@@ -205,3 +205,9 @@ a.button, input.button {
 	color: black;
 }
 */
+#userList {
+	margin-left: 5%;
+}
+.no-bullets {
+	list-style: none;
+}

@@ -190,6 +190,9 @@ def diffHighlight(bef, aft)
 		end
 		i += 1
 	end
+	if highlight
+		str += '</u>'
+	end
 =begin
 	# check again from right to left
 	equals = false

@@ -1,6 +1,6 @@
 <h2>Edited by <%= @his[:username] %></h2>
 <h4>On <%= @his[:date].strftime(fmt='%F %T') %></h4>
-<ul>
+<ul class="no-bullets">
 	<li><a href="<%= @his[:previous] %>" class="button button-inline button-primary <%= "disabled-link" if @his[:previous] == nil %>">prev</a></li>
 	<li><a href="<%= @his[:next] %>" class="button button-inline button-primary <%= "disabled-link" if @his[:next] == nil %>">next</a></li>
 </ul>
@@ -8,7 +8,7 @@
 	<%= @his[:diff] %>
 </section>
 <% if admin? %>
-	<ul>
-		<li><a class="button button-warning <%= "disabled-link" if @his[:next] == nil %>" href="/restore/<%= @his[:tid] %>">Restore</a></li>
+	<ul class="no-bullets">
+		<li><a class="button button-warning" href="/restore/<%= @his[:tid] %>">Restore</a></li>
 	</ul>
 <% end %>
