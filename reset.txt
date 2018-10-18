@@ -1,12 +1,12 @@
-<h3>The Wonderful World of Whisky</h3>
-
-<p>"Whisky" is an alcoholic drink originating in Scotland and Ireland which can be made from a variety of different grains such as barley or wheat. It is not to be confused with "Whiskey" which originated in the US.</p>
-
-
-
-<p>Typically the alcohol content in Whisky is 40% meaning that, if consumed in high quantities, users of the substance begin to act strangely. Side effects include slurred speech and loss of rational judgement.</p>
-
-
-
-<p>"I personally love whisky and I usually drink it with tonic water" - Ghandi</p>
-
+<h4><u>The Wonderful World of Whisky</u></h4>
+
+<p>"Whisky" is an alcoholic drink originating in Scotland and Ireland which can be made from a variety of different grains such as barley or wheat. It is not to be confused with "Whiskey" which originated in the US.</p>
+
+
+
+<p>Typically the alcohol content in Whisky is 40% meaning that, if consumed in high quantities, users of the substance begin to act strangely. Side effects include slurred speech and loss of rational judgement.</p>
+
+
+
+<p>"I personally love whisky and I usually drink it with tonic water" - Ghandi</p>
+
