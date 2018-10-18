@@ -215,7 +215,7 @@ end
 
 get '/' do
 	# readFile("wiki.txt")
-	last = History.first(:order => id.desc)
+	last = History.all(:order => :id.desc)[0].text
 	len = count_characters(last)
 	@info = last
 	@characters = $char.to_s
@@ -230,7 +230,7 @@ end
 get '/edit' do
 	protected!
 
-	last = History.first(:order => id.desc)
+	last = History.all(:order => :id.desc)[0].text
 	@info = last
 	erb :edit
 end
@@ -239,7 +239,7 @@ put '/edit' do
 	protected!
 
 	@info = "#{params[:message]}"
-	last = History.first(:order => id.desc)
+	last = History.all(:order => :id.desc)[0].text
 	if @info != last
 		log = Log.new
 		log.codeUser = $userData[:id]
@@ -252,14 +252,15 @@ put '/edit' do
 		his.text = @info
 		his.save
 	end
+	redirect '/edit'
 end
 
 get '/reset' do
 	protected!
 	# reset to the default text
-	last = History.first(:order => id.desc)
+	last = History.all(:order => :id.desc)[0].text
 
-	replace = readFile("wiki.txt")
+	replace = readFile("reset.txt")
 
 	if replace != last
 		log = Log.new
@@ -280,10 +281,10 @@ get '/makedefault' do
 	protected!
 	# Makes replace actual default text with the last change
 	## Any changes must be updated before make default.
-	last = History.first(:order => id.desc)
+	last = History.all(:order => :id.desc)[0].text
 	@info = last
 
-	replace = File.open(file, "w")
+	replace = File.open("reset.txt", "w")
 	replace.truncate(0)
 	replace.puts @info
 	replace.close
