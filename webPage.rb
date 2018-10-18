@@ -117,6 +117,7 @@ def joinLogUser(logs)
 	return join
 end
 
+#Goes through each character (counting them) and stop counting during html tags.
 def count_characters(article)
 	char = 0
 	html = false
@@ -131,6 +132,7 @@ def count_characters(article)
 			end
 		end
 	end
+	#Counts words. Uses spaces to count words.
 	$words = article.split(' ').length
 	$char = char
 end
@@ -151,6 +153,7 @@ def replace(file = "reset.txt")
 
 	replace = File.open(file_2, "w")
 	replace.truncate(0)
+	#truncate(0) makes the filesize 0. Effectively clear.
 	replace.puts @info
 	replace.close
 end
@@ -222,10 +225,6 @@ end
 
 get '/about' do
 	erb :about
-end
-
-get '/create' do
-	erb :create
 end
 
 get '/edit' do

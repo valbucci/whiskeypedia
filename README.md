@@ -14,11 +14,11 @@
 ## Documentation
 
 - [ ] manual.pdf
-	- [ ] Description of wiki (Vision)
-	- [ ] System Requirements:
+	- [x] Description of wiki (Vision)
+	- [x] System Requirements:
 		- Software
 		- Usernames and Passwords
 		- Additional Gems and Files.
-	- [ ] Description of Features and Functionalities.
-	- [ ] Step-by-step instructions on how to use features.
+	- [x] Description of Features and Functionalities.
+	- [x] Step-by-step instructions on how to use features.
 	- [ ] Screenshots illustrating features and functionalities.
