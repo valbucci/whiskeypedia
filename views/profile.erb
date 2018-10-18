@@ -1,7 +1,7 @@
 <% if @Userz %>
 	<header>
 		<h2>Your Profile</h2>
-		<h3><%= @Userz.username %></h3>
+		<h3><%= @Userz.username %> list of contributions</h3>
 	</header>
 <% end %>
 
@@ -11,7 +11,7 @@
 	%>
 		<div class="historyLog">
 			<a href="/history/<%= his[:id] %>" class="editHistLink">
-				<%= his[:date] %>
+				<%= his[:date].strftime(fmt='%F %T') %>
 			</a>
 		</div>
 	<% end %>

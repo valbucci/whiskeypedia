@@ -1,8 +1,9 @@
 <h2>Admin Control Panel</h2>
-<h4>User List</h4>
+<h3>User List</h3>
 <form action="/user/edit" method="post" id="userList">
 	<input type="hidden" name="_method" value="put">
 	<input class="button" type="submit" value="Apply">
+	<br><br>
 	<table>
 		<thead>
 			<tr>
@@ -23,5 +24,6 @@
 			<% end %>
 		</tbody>
 	</table>
+	<br><br>
 	<input class="button" type="submit" value="Apply">
 </form>
