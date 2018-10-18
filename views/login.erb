@@ -2,21 +2,27 @@
 <% if wrongcredentials %>
 	<%= erb :wrongaccount %>
 <% end %>
-<form action="/login" method="post">
-	<div class="input-field">
-		<label>
-			Username: <input type="text" placeholder="Insert here your username" name="username" value="<%= user %>">
-		</label>
-	</div>
-	<div class="input-field">
-		<label>
-			Password: <input type="password" placeholder="Insert here your password" name="password">
-		</label>
-	</div>
-	<div class="submit-button">
-		<input type="submit" value="Login!">
-	</div>
-</form>
+<div class="container form-container">
+	<form action="/login" method="post">
+		<div class="input-field">
+			<label>
+				<p>Username: </p>
+				<input type="text" placeholder="Insert here your username" name="username" value="<%= user %>">
+			</label>
+		</div>
+		<div class="input-field">
+			<div id="login-box">
+				<label>
+					<p>Password:</p>
+					<input type="password" placeholder="Insert here your password" name="password">
+				</label>
+			</div>
+		</div>
+		<div class="submit-button">
+			<input type="submit" value="Login!">
+		</div>
+	</form>
+</div>
 <div class="">
 	<p>Don't have an account yet?</p>
 	<a href="/createaccount">Create Account</a>
