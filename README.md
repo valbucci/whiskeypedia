@@ -10,9 +10,8 @@
 ## Design
 - [ ] Logo (Optional)
 
-
 ## Documentation
--[x] manual.pdf - Andrei
+- [x] manual.pdf - Andrei
 	- [x] Description of wiki (Vision)
 	- [x] System Requirements:
 		- Software
