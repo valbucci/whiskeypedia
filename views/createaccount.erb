@@ -1,6 +1,23 @@
-<h2>Create account</h2><br>
-<form action="/createaccount" method="post">
-	Username: <input type="text" placeholder="Insert here your username" name="username"><br>
-	Password: <input type="password" placeholder="Insert here your password" name="password"><br>
-	<input type="submit" value="Create!">
-</form>
+<h2>Create account</h2>
+<br><br>
+<div class="container form-container">
+	<form action="/createaccount" method="post">
+		<div class="input-field">
+			<label>
+				<p>Username: </p>
+				<input type="text" placeholder="Insert here your username" name="username">
+			</label>
+		</div>
+		<div class="input-field">
+			<div id="login-box">
+				<label>
+					<p>Password:</p>
+					<input type="password" placeholder="Insert here your password" name="password">
+				</label>
+			</div>
+		</div>
+		<div class="submit-button">
+			<input class="button" type="submit" value="Create!">
+		</div>
+	</form>
+</div>
