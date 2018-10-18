@@ -1,14 +1,14 @@
 <h2>Edited by <%= @his[:username] %></h2>
 <h4>On <%= @his[:date] %></h4>
 <ul>
-	<li><a href="<%= @his[:previous] %>" class="<%= "disabled-link" if @his[:previous] == nil %>">prev</a></li>
-	<li><a href="<%= @his[:next] %>" class="<%= "disabled-link" if @his[:next] == nil %>">next</a></li>
+	<li><a href="<%= @his[:previous] %>" class="button button-inline button-primary <%= "disabled-link" if @his[:previous] == nil %>">prev</a></li>
+	<li><a href="<%= @his[:next] %>" class="button button-inline button-primary <%= "disabled-link" if @his[:next] == nil %>">next</a></li>
 </ul>
 <section>
 	<%= @his[:diff] %>
 </section>
 <% if admin? %>
 	<ul>
-		<li><a class="<%= "disabled-link" if @his[:next] == nil %>" href="/restore/<%= @his[:tid] %>">Restore</a></li>
+		<li><a class="button button-warning <%= "disabled-link" if @his[:next] == nil %>" href="/restore/<%= @his[:tid] %>">Restore</a></li>
 	</ul>
 <% end %>

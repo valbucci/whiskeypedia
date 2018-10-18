@@ -97,10 +97,11 @@ header, .middle {
 
 .page {
 	padding: 0 25px;
+	margin-bottom: calc(5vh + 20px);
 }
 
 footer {
-	position: absolute;
+	position: fixed;
 	width: calc(100% - 50px);
 	height: calc(5vh - 20px);
 	bottom: 0;
@@ -115,8 +116,92 @@ footer {
 }
 
 .disabled-link {
-  pointer-events: none;
-  cursor: default;
-  text-decoration: none;
-  color: black;
+	pointer-events: none;
+	cursor: default;
+	text-decoration: none;
+	color: black;
 }
+.button-inline {
+	display: inline-block;
+}
+.container {
+	width: 100%;
+	text-align: center;
+	position: relative;
+}
+.form-container form {
+	margin: 0 auto;
+	display: block;
+}
+.submit-button {
+	margin-top: 20px;
+}
+.button {
+	font: bold 11px Arial;
+	text-decoration: none;
+	background-color: #EEEEEE;
+	color: #333333;
+	padding: 2px 6px 2px 6px;
+	border-top: 1px solid #CCCCCC;
+	border-right: 1px solid #333333;
+	border-bottom: 1px solid #333333;
+	border-left: 1px solid #CCCCCC;
+	/*
+	vertical-align: middle;
+	text-align: center;
+	min-width: 100px;
+	min-height: 40px;
+	border-radius: 4px;
+	background-color: aliceblue;
+	font-weight: bold;
+	border-bottom-color: black;
+	border-right-color: black;
+	border-top-color: grey;
+	border-left-color: grey;
+	padding: 1px 6px;
+	*/
+}
+.button:active {
+	border-top: 1px solid #333333;
+	border-right: 1px solid #CCCCCC;
+	border-bottom: 1px solid #CCCCCC;
+	border-left: 1px solid #333333;
+}
+.input-field input {
+	border-width: 1px;
+	vertical-align: middle;
+	text-align: left;
+	padding: 0 5px;
+	min-width: 100px;
+	height: 25px;
+	border-radius: 4px;
+	background-color: aliceblue;
+}
+.input-field p {
+	text-align: left;
+	margin-left: calc(50% - 100px);
+}
+#edit {
+	width: 100%;
+	position: relative;
+	display: block;
+}
+#edit textarea {
+	padding: 15px;
+	width: calc(100% - 15px);
+	border: 2px solid grey;
+}
+.actions {
+	text-align: center;
+}
+/*
+a.button, input.button {
+	min-width: 100px;
+	border: 2px solid;
+	line-height: 40px;
+	min-height: 40px;
+	display: inline-block;
+	text-decoration: none;
+	color: black;
+}
+*/

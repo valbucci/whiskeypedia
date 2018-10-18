@@ -1,15 +1,16 @@
 <h2>Edit article</h2>
 <form action="/edit" method="post" id="edit">
 	<input type="hidden" name="_method" value="put">
-	<textarea rows="20" cols="90" name="message"><%= @info %></textarea>
-	<input type="submit" value="Update">
-</form>
-
-<% if $credentials %>
-	<% if $credentials[0] != "" %>
-		<% if $credentials[0] == 'Admin' %>
-			<a href="../reset">Reset</a>
-			<a href="../makedefault">Make Default</a>
+	<textarea rows="20" name="message"><%= @info %></textarea>
+	<div class="actions">
+		<% if $credentials %>
+			<% if $credentials[0] != "" %>
+				<% if $credentials[0] == 'Admin' %>
+					<a class="button button-primary" href="../reset"><span>Reset</span></a>
+					<a class="button button-warning" href="../makedefault"><span>Make Default</span></a>
+				<% end %>
+			<% end %>
 		<% end %>
-	<% end %>
-<% end %>
+		<input class="button" type="submit" value="Update">
+	</div>
+</form>
