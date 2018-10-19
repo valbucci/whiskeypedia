@@ -4,6 +4,8 @@ body {
 	background-color: whitesmoke;
 	height: 100vh;
 	width: 100vw;
+	display: block;
+	overflow: hidden;
 }
 
 hr {
@@ -19,16 +21,12 @@ hr {
 
 .page_header {
 	height: 18vh;
+	text-align: center;
 	background-color: #000090;
 }
 
-.logo-row {
-	overflow: hidden;
-}
-
 .logo {
-	height: 18vh;
-	width: 18vh;
+	max-height: 18vh;
 }
 
 header h1 {
