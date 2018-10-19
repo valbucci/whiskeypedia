@@ -11,7 +11,8 @@
 ### Implementation of Required Features
 - [x] Visualize log. - Valerio
 - [x] Reset Button -> Original State. - Andrei
-- [x] Override/Remove Changes. - Valerio
+- [x] Override/Remove Changes/Change History. - Valerio
+- [x] Admin Controls - Valerio
 
 ### Additional Features
 - [x] Make Default Button - Andrei
