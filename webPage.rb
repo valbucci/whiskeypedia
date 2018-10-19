@@ -220,7 +220,12 @@ end
 
 get '/' do
 	# readFile("wiki.txt")
-	last = History.all(:order => :id.desc)[0].text
+	lastRecord = History.all(:order => :id.desc)[0];
+	if lastRecord != nil
+		last = lastRecord.text
+	else
+		last = "Uh oh... It seems like there is no content yet."
+	end
 	len = count_characters(last)
 	@info = last
 	@characters = $char.to_s
@@ -235,7 +240,12 @@ end
 get '/edit' do
 	protected!
 
-	last = History.all(:order => :id.desc)[0].text
+	lastRecord = History.all(:order => :id.desc)[0]
+	if lastRecord != nil
+		last = lastRecord.text
+	else
+		last = ""
+	end
 	@info = last
 	erb :edit
 end
@@ -244,7 +254,12 @@ put '/edit' do
 	protected!
 
 	@info = "#{params[:message]}"
-	last = History.all(:order => :id.desc)[0].text
+	lastRecord = History.all(:order => :id.desc)[0]
+	if lastRecord != nil
+		last = lastRecord.text
+	else
+		last = ""
+	end
 	if @info != last
 		log = Log.new
 		log.codeUser = $userData[:id]
@@ -263,7 +278,12 @@ end
 get '/reset' do
 	protected!
 	# reset to the default text
-	last = History.all(:order => :id.desc)[0].text
+	lastRecord = History.all(:order => :id.desc)[0]
+	if lastRecord != nil
+		last = lastRecord.text
+	else
+		last = ""
+	end
 
 	replace = readFile("reset.txt")
 
@@ -286,7 +306,12 @@ get '/makedefault' do
 	protected!
 	# Makes replace actual default text with the last change
 	## Any changes must be updated before make default.
-	last = History.all(:order => :id.desc)[0].text
+	lastRecord = History.all(:order => :id.desc)[0]
+	if lastRecord != nil
+		last = lastRecord.text
+	else
+		last = ""
+	end
 	@info = last
 
 	replace = File.open("reset.txt", "w")
