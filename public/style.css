@@ -19,19 +19,16 @@ hr {
 
 .page_header {
 	height: 18vh;
-	text-align: center;
 	background-color: #000090;
 }
 
 .logo-row {
-	width: 250px
-	margin: 0 auto;
+	overflow: hidden;
 }
 
 .logo {
-	width: 250px;
-	height: 150px;
-	text-align: center;
+	height: 18vh;
+	width: 18vh;
 }
 
 header h1 {
